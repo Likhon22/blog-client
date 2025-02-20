@@ -1,7 +1,13 @@
-import CreateArticle from "./pages/Admin/CreateArticle";
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
-  return <CreateArticle />;
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
 }
 
 export default App;

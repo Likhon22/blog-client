@@ -15,7 +15,7 @@ function CreateArticle() {
       [{ list: "ordered" }, { list: "bullet" }],
       ["link", "image"],
       ["clean"],
-      [{ align: [] }], // Adds alignment options (left, center, right)
+      [{ align: [] }], 
     ],
   };
   console.log(value);
