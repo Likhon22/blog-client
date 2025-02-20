@@ -5,11 +5,13 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { axiosInstance } from "../../utils";
 
 const Register = () => {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
   const { register, updateUserName } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation();
   console.log(location);
@@ -27,6 +29,7 @@ const Register = () => {
     }
 
     try {
+      setLoading(true);
       const data = await register(email, password);
       await updateUserName(name);
       const userEmail = data.user.email;
@@ -36,14 +39,30 @@ const Register = () => {
           name: data.user.displayName,
           email: userEmail,
         };
-        console.log(userInfo);
+        const result = await axiosInstance.post("/users/create-user", userInfo);
+        setLoading(false);
+        if (result.data.success) {
+          toast.success("Registered Successfully");
+          navigate("/login");
+        }
       }
       //   navigate("/login");
       toast.success("Registered Successfully");
     } catch (err) {
       toast.error(err.message);
+      setLoading(false);
     }
   };
+  if (loading) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <span className="loading loading-bars loading-xs"></span>
+        <span className="loading loading-bars loading-sm"></span>
+        <span className="loading loading-bars loading-md"></span>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
   return (
     <div>
       <Helmet>
