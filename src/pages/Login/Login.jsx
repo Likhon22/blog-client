@@ -14,6 +14,8 @@ const Login = () => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
+    const password = form.password.value;
+
     // const res = await axios.get(`/users/${email}`);
 
     // const username = res?.data?.username;
