@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [toggle, setToggle] = useState(false);
@@ -9,7 +11,7 @@ const Login = () => {
   const location = useLocation();
   console.log(location);
   const to = location?.state?.from?.pathname || "/";
-
+  const { login } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,7 +24,15 @@ const Login = () => {
     // const userImage = res?.data?.userImage;
     // const role = res?.data?.role;
 
-    // const password = form.password.value;
+    try {
+      const result = await login(email, password);
+      if (result.user.email) {
+        toast.success("Login Successfully");
+        navigate(to, { replace: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
 
     // await login(email, password, username, userImage, role).then((data) => {
     //   if (data) {

@@ -1,36 +1,29 @@
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "../../../utils";
 import ArticleCard from "../../ArticleCard/ArticleCard";
-
-const cards = [
-  {
-    id: 1,
-    title: "Gordon Parks, Beachwear, Cuba, 1956",
-    category: "Arts & Entertainment",
-    image:
-      "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
-  },
-  {
-    id: 2,
-    title: "Ella Fitzgerald: The First Lady of Song",
-    category: "Arts & Entertainment",
-    image:
-      "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
-  },
-  {
-    id: 3,
-    title: "Jimmy Carter: A Noble Life",
-    category: "History",
-    image:
-      "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp",
-  },
-];
-
-console.log(cards);
+import Loader from "../../Loader/Loader";
 
 const LatestArticleCards = () => {
+  const { data: blogs, isLoading } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      return await axiosInstance.get("/articles/all-articles");
+    },
+  });
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (!blogs?.data?.data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-2xl text-black font-medium">
+        No Latest Blogs Found
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-4/5 mx-auto py-12">
-      {cards.map((card) => (
-        <ArticleCard key={card.id} card={card} />
+      {blogs?.data?.data?.map((blog) => (
+        <ArticleCard key={blog._id} blog={blog} />
       ))}
     </div>
   );

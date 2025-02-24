@@ -1,6 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+  console.log(user?.email);
+
   const navItems = (
     <>
       <li>
@@ -38,9 +42,9 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive ? "bg-blue-400 text-white rounded-lg p-2" : "text-white"
           }
-          to={"/contact"}
+          to={"/dashboard/admin-home"}
         >
-          Contact
+          Dashboard
         </NavLink>
       </li>
     </>
@@ -79,11 +83,20 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/login"}>
-          <button className="btn bg-blue-400 shadow-none text-white border-none rounded-lg hover:bg-blue-500">
-            Login
+        {!user?.email ? (
+          <Link to={"/login"}>
+            <button className="btn bg-blue-400 shadow-none text-white border-none rounded-lg hover:bg-blue-500">
+              Login
+            </button>
+          </Link>
+        ) : (
+          <button
+            onClick={() => logout()}
+            className="btn bg-blue-400 shadow-none text-white border-none rounded-lg hover:bg-blue-500"
+          >
+            Logout
           </button>
-        </Link>
+        )}
       </div>
     </div>
   );

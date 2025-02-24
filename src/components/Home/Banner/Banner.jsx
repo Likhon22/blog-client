@@ -5,7 +5,7 @@ const images = [
   "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp",
 ];
 
-const Carousel = () => {
+const Banner = () => {
   return (
     <div className="carousel w-full h-screen">
       {images.map((img, index) => {
@@ -34,4 +34,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default Banner;
