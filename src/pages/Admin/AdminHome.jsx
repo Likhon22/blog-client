@@ -16,16 +16,10 @@ const AdminHome = () => {
     },
   });
 
-  const {
-    data: blogs,
-    isLoading: blogLoading,
-    error,
-  } = useQuery({
+  const { data: blogs, isLoading: blogLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const response = await axiosInstance.get(
-        `/articles/all-articles?email=${user?.email}`
-      );
+      const response = await axiosInstance.get(`/articles/all-articles`);
       return response.data;
     },
   });

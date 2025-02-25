@@ -86,10 +86,10 @@ const Banner = () => {
           )}
 
           {results?.data?.length > 0 && (
-            <div className="bg-white opacity-95 absolute top-[55%]   w-full  shadow-lg rounded-lg max-h-[400px] overflow-y-auto mt-2">
+            <div className="bg-white opacity-95 absolute top-[55%] min-h-96     w-full  shadow-lg rounded-lg max-h-[400px] overflow-y-auto mt-2">
               {results?.data?.map((result, index) => (
                 <Link key={index} to={`/blog/${result._id}`}>
-                  <div className="py-3 px-4 border-b min-h-96 transition-all rounded-lg cursor-pointer">
+                  <div className="py-3 px-4  transition-all rounded-lg cursor-pointer">
                     <div className="flex items-center bg-gray-100 hover:bg-gray-200 rounded-lg p-4">
                       {/* You can add an icon or image here */}
                       <span className="font-semibold text-lg pb-1 ">

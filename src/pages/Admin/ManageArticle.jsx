@@ -8,11 +8,7 @@ import useAuth from "../../hooks/useAuth";
 const ManageArticle = () => {
   const { user } = useAuth();
 
-  const {
-    data: blogs,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
       const response = await axiosInstance.get(
