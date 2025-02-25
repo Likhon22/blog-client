@@ -23,11 +23,11 @@ const ManageArticle = () => {
   });
   console.log(blogs);
 
-  if (isLoading || loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
-  if (error || !blogs?.data?.length) {
+  if (!isLoading && blogs?.data?.length <= 0) {
     return (
       <div className="flex justify-center items-center h-screen text-2xl text-red-500 font-medium">
         No Blogs Found
@@ -50,25 +50,28 @@ const ManageArticle = () => {
             </tr>
           </thead>
           <tbody>
-            {blogs?.data?.map((article, index) => (
-              <tr key={article._id} className="hover:bg-gray-50">
-                <td className="border border-gray-300 p-3">{index + 1}</td>
-                <td className="border border-gray-300 p-3">{article.title}</td>
-                <td className="border border-gray-300 p-3 capitalize">
-                  {article.category}
-                </td>
-                <td className="border border-gray-300 p-3 flex gap-2">
-                  <Link to={`/dashboard/edit-article/${article._id}`}>
-                    <button className="bg-green-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600 transition">
-                      <FaEdit /> Edit
+            {blogs?.data?.length > 0 &&
+              blogs?.data?.map((article, index) => (
+                <tr key={article._id} className="hover:bg-gray-50">
+                  <td className="border border-gray-300 p-3">{index + 1}</td>
+                  <td className="border border-gray-300 p-3">
+                    {article.title}
+                  </td>
+                  <td className="border border-gray-300 p-3 capitalize">
+                    {article.category}
+                  </td>
+                  <td className="border border-gray-300 p-3 flex gap-2">
+                    <Link to={`/dashboard/edit-article/${article._id}`}>
+                      <button className="bg-green-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-600 transition">
+                        <FaEdit /> Edit
+                      </button>
+                    </Link>
+                    <button className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition">
+                      <FaTrash /> Delete
                     </button>
-                  </Link>
-                  <button className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition">
-                    <FaTrash /> Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

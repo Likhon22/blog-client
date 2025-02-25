@@ -35,25 +35,25 @@ function EditSingleArticle() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const form = e.target;
-    // const title = form.title.value;
-    // const category = form.category.value.toLowerCase();
-    // const authorEmail = user.email;
+    const form = e.target;
+    const title = form.title.value;
+    const category = form.category.value.toLowerCase();
 
-    // const articleInfo = { title, category, post: value, authorEmail };
+    const articleInfo = { title, category, post: value };
+    console.log(articleInfo);
 
-    // try {
-    //   const result = await axiosInstance.put(
-    //     `/articles/update-article/${id}`,
-    //     articleInfo
-    //   );
-    //   if (result.data.success) {
-    //     toast.success("Article updated successfully");
-    //   }
-    // } catch (err) {
-    //   toast.error("Failed to update article");
-    //   console.log(err);
-    // }
+    try {
+      const result = await axiosInstance.put(
+        `/articles/update-article/${id}`,
+        articleInfo
+      );
+      if (result.data.success) {
+        toast.success("Article updated successfully");
+      }
+    } catch (err) {
+      toast.error("Failed to update article");
+      console.log(err);
+    }
   };
 
   return (
@@ -94,7 +94,7 @@ function EditSingleArticle() {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 transition"
+            className="px-6 py-3 cursor-pointer bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 transition"
           >
             Update Article
           </button>

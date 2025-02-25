@@ -10,11 +10,11 @@ const AllBlogs = () => {
       return await axiosInstance.get("/articles/all-articles");
     },
   });
-  console.log(blogs?.data?.data);
+
   if (isLoading) {
     return <Loader />;
   }
-  if (!blogs?.data?.data.length) {
+  if (!isLoading && blogs?.data?.data?.length <= 0) {
     return (
       <div className="flex justify-center items-center h-screen text-2xl text-black font-medium">
         No Blogs Found
