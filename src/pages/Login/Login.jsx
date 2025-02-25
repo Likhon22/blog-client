@@ -3,6 +3,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { axiosInstance } from "../../utils";
 
 const Login = () => {
   const [toggle, setToggle] = useState(false);
@@ -11,7 +13,7 @@ const Login = () => {
   const location = useLocation();
   console.log(location);
   const to = location?.state?.from?.pathname || "/";
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -40,6 +42,30 @@ const Login = () => {
     //     navigate(to, { replace: true });
     //   }
     // });
+  };
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+      console.log(result);
+      const email = result.user.email;
+      const name = result.user.displayName;
+      const userImage = result.user.photoURL;
+      const userInfo = {
+        email,
+        name,
+        userImage,
+      };
+      console.log(userInfo);
+      const user = await axiosInstance.post("/users/login", userInfo);
+      console.log(user);
+
+      if (user?.data?.success) {
+        toast.success("Login Successfully");
+        navigate(to, { replace: true });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -108,6 +134,14 @@ const Login = () => {
               Register
             </NavLink>
           </p>
+          <div
+            onClick={() => handleGoogleLogin()}
+            className="  border py-2 w-1/2 cursor-pointer mx-auto mb-6 flex items-center gap-1 justify-center rounded-xl shadow-lg border-blue-950"
+          >
+            <FcGoogle className=""></FcGoogle>
+
+            <button>Google</button>
+          </div>
         </div>
       </div>
     </div>

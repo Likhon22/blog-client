@@ -14,7 +14,7 @@ const AllBlogs = () => {
   if (isLoading) {
     return <Loader />;
   }
-  if (!blogs?.data?.data) {
+  if (!blogs?.data?.data.length) {
     return (
       <div className="flex justify-center items-center h-screen text-2xl text-black font-medium">
         No Blogs Found

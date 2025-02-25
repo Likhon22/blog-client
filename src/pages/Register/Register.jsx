@@ -10,7 +10,7 @@ import { axiosInstance } from "../../utils";
 const Register = () => {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
-  const { register, updateUserName } = useAuth();
+  const { register, updateUserName, logout } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
@@ -40,6 +40,7 @@ const Register = () => {
           email: userEmail,
         };
         const result = await axiosInstance.post("/users/create-user", userInfo);
+        await logout();
         setLoading(false);
         if (result.data.success) {
           toast.success("Registered Successfully");

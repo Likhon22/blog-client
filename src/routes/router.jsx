@@ -8,6 +8,7 @@ import AdminHome from "../pages/Admin/AdminHome";
 import CreateArticle from "../pages/Admin/CreateArticle";
 import AllBlogs from "../pages/AllBlogs/AllBlogs";
 import SingleBlog from "../pages/SingleBlog/SingleBlog";
+import EditArticle from "../pages/Admin/EditArticle";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "create-article",
         element: <CreateArticle />,
+      },
+      {
+        path: "edit-article/:id",
+        element: <EditArticle />,
       },
     ],
   },
