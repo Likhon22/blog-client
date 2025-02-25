@@ -6,7 +6,7 @@ import Loader from "../../components/Loader/Loader";
 import useAuth from "../../hooks/useAuth";
 
 const ManageArticle = () => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   const {
     data: blogs,
