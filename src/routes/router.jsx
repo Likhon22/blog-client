@@ -8,7 +8,9 @@ import AdminHome from "../pages/Admin/AdminHome";
 import CreateArticle from "../pages/Admin/CreateArticle";
 import AllBlogs from "../pages/AllBlogs/AllBlogs";
 import SingleBlog from "../pages/SingleBlog/SingleBlog";
-import EditArticle from "../pages/Admin/EditArticle";
+
+import ManageArticle from "../pages/Admin/ManageArticle";
+import EditSingleArticle from "../pages/Admin/EditSingleArticle";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +52,12 @@ const router = createBrowserRouter([
         element: <CreateArticle />,
       },
       {
+        path: "manage-article",
+        element: <ManageArticle />,
+      },
+      {
         path: "edit-article/:id",
-        element: <EditArticle />,
+        element: <EditSingleArticle />,
       },
     ],
   },

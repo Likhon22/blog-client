@@ -28,9 +28,9 @@ const Sidebar = () => {
           className={({ isActive }) =>
             isActive ? "bg-blue-400 text-white rounded-lg p-2" : "text-white"
           }
-          to={"/about"}
+          to={"/dashboard/manage-article"}
         >
-          About
+          Manage Articles
         </NavLink>
       </li>
       <div className="divider "></div>

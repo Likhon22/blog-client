@@ -1,7 +1,17 @@
 /* eslint-disable react/prop-types */
 import ReactQuill from "react-quill";
-
-const TextEditor = ({ value, setValue, modules }) => {
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image"],
+    ["clean"],
+    [{ align: [] }],
+  ],
+};
+const TextEditor = ({ value, setValue }) => {
   return (
     <ReactQuill
       theme="snow"

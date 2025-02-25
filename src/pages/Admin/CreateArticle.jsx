@@ -10,19 +10,7 @@ import useAuth from "../../hooks/useAuth";
 function CreateArticle() {
   const [value, setValue] = useState("");
   const { user } = useAuth();
-  console.log(user.email);
-
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ color: [] }, { background: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link", "image"],
-      ["clean"],
-      [{ align: [] }],
-    ],
-  };
+  console.log(user?.email);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +83,7 @@ function CreateArticle() {
         </div>
 
         <div>
-          <TextEditor value={value} setValue={setValue} modules={modules} />
+          <TextEditor value={value} setValue={setValue} />
         </div>
 
         <div className="flex justify-center mt-6">
