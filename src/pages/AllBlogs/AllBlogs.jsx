@@ -3,6 +3,7 @@ import Banner from "../../components/Home/Banner/Banner";
 import { axiosInstance } from "../../utils";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import Loader from "../../components/Loader/Loader";
+import bannerImg from "../../assets/5_Blog_Layout_Best_Practices_From_2016-1.jpg";
 const AllBlogs = () => {
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
@@ -23,8 +24,8 @@ const AllBlogs = () => {
   }
   return (
     <div>
-      <Banner />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 w-4/5 mx-auto ">
+      <img className="w-full h-screen" src={bannerImg} alt="banner" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-4 w-4/5 mx-auto ">
         {blogs?.data?.data?.map((blog) => (
           <ArticleCard key={blog._id} blog={blog} />
         ))}

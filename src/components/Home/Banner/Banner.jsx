@@ -3,9 +3,9 @@ import { useState } from "react";
 import { axiosInstance } from "../../../utils";
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
-
+import banner1 from "../../../assets/news-update-concept-with-team-people-and-website-page-design-and-notifications-for-website-landing-homepage-banner-or-design-vector-illustration-TWN1XF.jpg";
 const images = [
-  "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
+  banner1,
   "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp",
   "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
   "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp",
