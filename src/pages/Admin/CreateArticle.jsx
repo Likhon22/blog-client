@@ -1,22 +1,34 @@
 import { useState } from "react";
-
+import { useQuery } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
 import { FaImage } from "react-icons/fa";
 import TextEditor from "../../components/TextEditor/TextEditor";
-import { axiosInstance } from "../../utils";
+
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import { axiosInstance } from "../../utils";
+
+
 
 function CreateArticle() {
   const [value, setValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState("");
   const { user } = useAuth();
   console.log(user?.email);
+
+  const { data: categories, refetch } = useQuery({
+    queryKey: "categories",
+    queryFn: async () => {
+      const response = await axiosInstance.get("/categories");
+      return response.data.data;
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const category = form.category.value;
+    const category = categoryValue;
     const authorEmail = user.email;
     const articleInfo = {
       title,
@@ -32,6 +44,7 @@ function CreateArticle() {
       console.log(result.data);
       if (result.data.success) {
         toast.success("Article created successfully");
+
         form.reset();
       }
     } catch (err) {
@@ -52,6 +65,24 @@ function CreateArticle() {
   // };
   const handleCategory = async (e) => {
     e.preventDefault();
+    const form = e.target;
+
+    const category = form.category.value;
+    const categoryInfo = { name: category.toLowerCase() };
+    try {
+      const result = await axiosInstance.post(
+        "/categories/create-category",
+        categoryInfo
+      );
+
+      if (result.data.success) {
+        refetch();
+        toast.success("Category created successfully");
+        form.reset();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -64,10 +95,10 @@ function CreateArticle() {
           Add Category
         </button>
         <dialog id="my_modal_1" className="modal">
-          <form className="modal-box">
+          <form className="modal-box" onSubmit={handleCategory}>
             <h3 className="font-bold text-lg pb-2">Add Category</h3>
             <input
-              className="border-2 border-blue-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white cursor-text"
+              className="order-2 border-blue-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white cursor-text"
               type="text"
               name="category"
               id="category"
@@ -98,8 +129,8 @@ function CreateArticle() {
         </h2>
 
         <form onSubmit={handleSubmit} className="mb-6">
-          <div className="mb-4">
-            <label className="text-blue-700 font-semibold">Title</label>
+          <div className="mb-4 flex flex-col gap-2">
+            <label className="text-blue-700 font-semibold ">Title</label>
             <input
               className="border-2 border-blue-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white cursor-text"
               type="text"
@@ -110,14 +141,26 @@ function CreateArticle() {
           </div>
 
           <div className="mb-4">
-            <label className="text-blue-700 font-semibold">Category</label>
-            <input
-              className="border-2 z-10 border-blue-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white cursor-text"
-              type="text"
-              name="category"
-              id="category"
-              placeholder="Enter article category"
-            />
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="text-blue-700 block pb-2">
+                  Select a Category
+                </span>
+              </div>
+              <select
+                onChange={(e) => setCategoryValue(e.target.value)}
+                className="select select-bordered  border-blue-300 rounded-lg  w-full focus:ring-2 focus:ring-blue-500  bg-white cursor-text"
+              >
+                <option disabled selected>
+                  Pick one
+                </option>
+                {categories?.map((category) => (
+                  <option className="capitalize" key={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
 
           <div>

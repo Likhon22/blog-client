@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { FaImage } from "react-icons/fa";
 import TextEditor from "../../components/TextEditor/TextEditor";
-import { axiosInstance } from "../../utils";
+
 import toast from "react-hot-toast";
 
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
+import { axiosInstance } from "../../utils";
 
 function EditSingleArticle() {
   const { id } = useParams();

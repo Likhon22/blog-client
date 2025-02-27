@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { axiosInstance } from "../../utils";
+
 import SingleArticleCard from "../../components/SingleArticleCard/SingleArticleCard";
 import Loader from "../../components/Loader/Loader";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
+import { axiosInstance } from "../../utils";
 
 const SingleBlog = () => {
   const { id } = useParams();

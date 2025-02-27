@@ -1,23 +1,59 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../../utils";
+
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
-import useAuth from "../../hooks/useAuth";
 
+import Swal from "sweetalert2";
+import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import { axiosInstance } from "../../utils";
 const ManageArticle = () => {
   const { user } = useAuth();
-
-  const { data: blogs, isLoading } = useQuery({
-    queryKey: ["blogs"],
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
+  const {
+    data: blogs,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["blogs", currentPage],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        `/articles/all-articles?email=${user?.email}`
+        `/articles/all-articles?email=${user?.email}&limit=${limit}&page=${currentPage}`
       );
       return response.data;
     },
   });
-  console.log(blogs);
+
+  const pages = blogs?.meta?.totalPages;
+  const pageArray = new Array(pages).fill(0);
+
+  const handleDeleteArticle = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosInstance.delete(`/articles/${id}`);
+          refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -62,7 +98,10 @@ const ManageArticle = () => {
                         <FaEdit /> Edit
                       </button>
                     </Link>
-                    <button className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition">
+                    <button
+                      onClick={() => handleDeleteArticle(article._id)}
+                      className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600 transition"
+                    >
                       <FaTrash /> Delete
                     </button>
                   </td>
@@ -70,6 +109,20 @@ const ManageArticle = () => {
               ))}
           </tbody>
         </table>
+      </div>
+      <div className="join flex justify-center items-center mt-6 mb-12">
+        {pages > 1 &&
+          pageArray?.map((_, page) => (
+            <button
+              onClick={() => setCurrentPage(page + 1)}
+              key={page}
+              className={`join-item btn ${
+                currentPage === page + 1 ? "bg-blue-400 text-white" : ""
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
       </div>
     </div>
   );

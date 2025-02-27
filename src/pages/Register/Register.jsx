@@ -3,8 +3,10 @@ import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+
 import toast from "react-hot-toast";
+
+import useAuth from "../../hooks/useAuth";
 import { axiosInstance } from "../../utils";
 
 const Register = () => {
@@ -15,7 +17,7 @@ const Register = () => {
 
   const location = useLocation();
   console.log(location);
-  const to = location?.state?.from?.pathname || "/";
+
   const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;

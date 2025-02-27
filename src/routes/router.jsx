@@ -11,6 +11,8 @@ import SingleBlog from "../pages/SingleBlog/SingleBlog";
 
 import ManageArticle from "../pages/Admin/ManageArticle";
 import EditSingleArticle from "../pages/Admin/EditSingleArticle";
+import CategoryWiseArticle from "../pages/CategoryWiseArticle/CategoryWiseArticle";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
         path: "/blog/:id",
         element: <SingleBlog />,
       },
+      {
+        path: "/category/:id",
+        element: <CategoryWiseArticle />,
+      },
     ],
   },
   {
@@ -41,7 +47,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "admin-home",

@@ -1,10 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
+
+import { useQuery } from "@tanstack/react-query";
+
 import useAuth from "../../hooks/useAuth";
+import { axiosInstance } from "../../utils";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  console.log(user?.email);
+  const role = useRole();
 
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/categories");
+      return response.data.data;
+    },
+  });
   const navItems = (
     <>
       <li>
@@ -28,6 +40,25 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
+        <div className="dropdown dropdown-hover dropdown-bottom  ">
+          <div tabIndex={0} role="button" className="text-white">
+            Categories
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-gray-900/50 text-white font-medium  md:w-[500px] rounded-box z-[1] grid grid-cols-1 md:grid-cols-2  p-2 "
+          >
+            {categories?.map((category) => (
+              <li key={category._id}>
+                <Link className="capitalize" to={`/category/${category.name}`}>
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+      <li>
         <NavLink
           className={({ isActive }) =>
             isActive ? "bg-blue-400 text-white rounded-lg p-2" : "text-white"
@@ -37,16 +68,18 @@ const Navbar = () => {
           About
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "bg-blue-400 text-white rounded-lg p-2" : "text-white"
-          }
-          to={"/dashboard/admin-home"}
-        >
-          Dashboard
-        </NavLink>
-      </li>
+      {user?.email && role === "admin" && (
+        <li>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "bg-blue-400 text-white rounded-lg p-2" : "text-white"
+            }
+            to={"/dashboard/admin-home"}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      )}
     </>
   );
   return (
@@ -72,7 +105,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm font-medium dropdown-content bg-gray-900/90 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {navItems}
           </ul>
@@ -80,7 +113,7 @@ const Navbar = () => {
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navItems}</ul>
+        <ul className="menu menu-horizontal font-medium px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
         {!user?.email ? (

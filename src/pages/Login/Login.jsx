@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+
+import useAuth from "../../hooks/useAuth";
 import { axiosInstance } from "../../utils";
 
 const Login = () => {
@@ -64,7 +66,7 @@ const Login = () => {
         navigate(to, { replace: true });
       }
     } catch (e) {
-      console.log(e);
+      toast.error(e.message);
     }
   };
 

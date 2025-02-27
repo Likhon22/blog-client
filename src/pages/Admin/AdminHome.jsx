@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../../utils";
+
 import { FaUsers } from "react-icons/fa";
 
 import { RiArticleFill } from "react-icons/ri";
 import Loader from "../../components/Loader/Loader";
 import UserTable from "../../components/UserTable/UserTable";
+import { axiosInstance } from "../../utils";
 
 const AdminHome = () => {
   const { data: users, isLoading: userLoading } = useQuery({

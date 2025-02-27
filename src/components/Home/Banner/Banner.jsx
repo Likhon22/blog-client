@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { axiosInstance } from "../../../utils";
+
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
 import banner1 from "../../../assets/news-update-concept-with-team-people-and-website-page-design-and-notifications-for-website-landing-homepage-banner-or-design-vector-illustration-TWN1XF.jpg";
+import { axiosInstance } from "../../../utils";
 const images = [
   banner1,
   "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp",
