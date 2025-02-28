@@ -15,6 +15,14 @@ const AdminHome = () => {
       return response.data;
     },
   });
+  // Fetch blogs
+  const { data: blogs, isLoading: blogLoading } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/articles/all-articles");
+      return response.data;
+    },
+  });
 
   // Fetch categories
   const {
@@ -26,15 +34,6 @@ const AdminHome = () => {
     queryFn: async () => {
       const response = await axiosInstance.get("/categories");
       return response.data.data;
-    },
-  });
-
-  // Fetch blogs
-  const { data: blogs, isLoading: blogLoading } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: async () => {
-      const response = await axiosInstance.get("/articles/all-articles");
-      return response.data;
     },
   });
 
@@ -200,9 +199,15 @@ const AdminHome = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-500">
-                        {blogs?.data?.filter(
-                          (blog) => blog?.category === category?.name
-                        )?.length || 0}
+                        {blogs?.data?.data
+                          ? blogs.data.data.filter(
+                              (blog) => blog?.category === category?.name
+                            ).length
+                          : blogs?.data
+                          ? blogs.data.filter(
+                              (blog) => blog?.category === category?.name
+                            ).length
+                          : 0}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
