@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 
-
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import Loader from "../../components/Loader/Loader";
 import bannerImg from "../../assets/5_Blog_Layout_Best_Practices_From_2016-1.jpg";
@@ -37,21 +36,26 @@ const AllBlogs = () => {
   return (
     <div>
       {/* latest article */}
-      <div className="relative ">
-        <img className="w-full h-screen" src={bannerImg} alt="banner" />
-        <div className=" absolute bottom-1/22  text-white  p-12 bg-opacity-30 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-          <Link to={`/category/${firstArticle?.category}`} className="mx-auto">
-            <p className="capitalize bg-red-600 text-white font-medium p-1 w-48 mx-auto rounded-sm hover:bg-gray-700 transition-all">
-              {firstArticle?.category}
-            </p>
-          </Link>
-          <Link to={`/blog/${firstArticle?._id}`}>
-            <h2 className="text-4xl  font-extrabold capitalize">
-              {firstArticle.title}
-            </h2>
-          </Link>
+      {firstArticle && (
+        <div className="relative ">
+          <img className="w-full h-screen" src={bannerImg} alt="banner" />
+          <div className=" absolute bottom-1/9 bg-gray-950/10 rounded-lg  text-white  p-12  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+            <Link
+              to={`/category/${firstArticle?.category}`}
+              className="mx-auto"
+            >
+              <p className="capitalize bg-red-600 text-white font-medium p-1 w-48 mx-auto rounded-sm hover:bg-gray-700 transition-all">
+                {firstArticle?.category}
+              </p>
+            </Link>
+            <Link to={`/blog/${firstArticle?._id}`}>
+              <h2 className="text-4xl  font-extrabold capitalize">
+                {firstArticle.title}
+              </h2>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
       <div className="text-center">
         <h2 className="text-2xl font-medium text-black pt-6">
           Latest Articles

@@ -8,13 +8,17 @@ import { useState } from "react";
 import { axiosInstance } from "../../utils";
 const CategoryWiseArticle = () => {
   const { id } = useParams();
+  console.log(id);
+
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 10;
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["category", id, currentPage],
     queryFn: async () => {
       const res = await axiosInstance.get(
-        `/articles/all-articles?category=${id}&limit=${limit}&page=${currentPage}`
+        `/articles/all-articles?category=${encodeURIComponent(
+          id
+        )}&limit=${limit}&page=${currentPage}`
       );
       return res.data;
     },
@@ -34,7 +38,7 @@ const CategoryWiseArticle = () => {
       <div className="relative ">
         <img className="w-full h-screen" src={bannerImg} alt="banner" />
         {firstArticle && (
-          <div className=" absolute bottom-1/22  text-white  p-12 bg-opacity-30 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+          <div className=" absolute bottom-1/9 bg-gray-950/10 rounded-lg  text-white  p-12 bg-opacity-30 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
             <Link
               to={`/category/${firstArticle?.category}`}
               className="mx-auto"

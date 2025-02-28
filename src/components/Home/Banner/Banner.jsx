@@ -68,38 +68,44 @@ const Banner = () => {
 
       {/* Search Box Overlay (Centered) */}
       <div className="absolute top-1/3 left-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2">
-        <input
-          type="text"
-          placeholder="Search here..."
-          className="input input-bordered rounded-lg w-full text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Search here..."
+            className="input input-bordered rounded-lg w-full text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
         <div className="relative mt-2">
           {/* Display Results */}
-          {isLoading && <Loader />}
 
           {error && (
             <p className="absolute top-[55%] left-1/2 -translate-x-1/2 text-red-500 font-semibold">
               Error fetching results.
             </p>
           )}
-
-          {results?.data?.length > 0 && (
-            <div className="bg-white opacity-95 absolute top-[55%] min-h-96     w-full  shadow-lg rounded-lg max-h-[400px] overflow-y-auto mt-2">
-              {results?.data?.map((result, index) => (
-                <Link key={index} to={`/blog/${result._id}`}>
-                  <div className="py-3 px-4  transition-all rounded-lg cursor-pointer">
-                    <div className="flex items-center bg-gray-100 hover:bg-gray-200 rounded-lg p-4">
-                      {/* You can add an icon or image here */}
-                      <span className="font-semibold text-lg pb-1 ">
-                        {result.title}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div>
+              {results?.data?.length > 0 && (
+                <div className="bg-white opacity-95 absolute top-[55%] min-h-96     w-full  shadow-lg rounded-lg max-h-[400px] overflow-y-auto mt-2">
+                  {results?.data?.map((result, index) => (
+                    <Link key={index} to={`/blog/${result._id}`}>
+                      <div className="py-3 px-4  transition-all rounded-lg cursor-pointer">
+                        <div className="flex items-center bg-gray-100 hover:bg-gray-200 rounded-lg p-4">
+                          {/* You can add an icon or image here */}
+                          <span className="font-semibold text-lg pb-1 ">
+                            {result.title}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
