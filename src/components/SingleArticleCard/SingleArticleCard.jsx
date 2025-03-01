@@ -244,10 +244,7 @@ const SingleArticleCard = ({ blog }) => {
                   Written by <span className="capitalize">{author.name}</span>
                 </h3>
                 <p className="text-gray-600 text-sm mt-1">
-                  {author.bio ||
-                    (
-                      <span className="capitalize">${author.name}</span>
-                    )` is a contributor at Zenfla.`}
+                  {author.bio || `${author.name} is a contributor at Zenfla.`}
                 </p>
               </div>
             </div>
