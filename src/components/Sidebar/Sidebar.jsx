@@ -8,6 +8,7 @@ import {
   FaNewspaper,
   FaChevronLeft,
   FaChevronRight,
+  FaUsers,
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -52,6 +53,12 @@ const Sidebar = () => {
       path: "/dashboard/manage-article",
       name: "Manage Articles",
       icon: <FaList />,
+      group: "admin",
+    },
+    {
+      path: "/dashboard/manage-users",
+      name: "Manage Users",
+      icon: <FaUsers />,
       group: "admin",
     },
     {

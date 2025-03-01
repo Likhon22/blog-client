@@ -13,6 +13,8 @@ import ManageArticle from "../pages/Admin/ManageArticle";
 import EditSingleArticle from "../pages/Admin/EditSingleArticle";
 import CategoryWiseArticle from "../pages/CategoryWiseArticle/CategoryWiseArticle";
 import PrivateRoute from "./PrivateRoute";
+import ManageUsers from "../pages/Admin/ManageUsers";
+import About from "../pages/About/About";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: <CategoryWiseArticle />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
@@ -60,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "create-article",
         element: <CreateArticle />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
       },
       {
         path: "manage-article",

@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import { axiosInstance } from "../../utils";
 import { FiMenu, FiX, FiChevronDown, FiLogOut, FiHome } from "react-icons/fi";
-import { FaUser } from "react-icons/fa"; // Added FaUser for avatar fallback
+import { FaUser } from "react-icons/fa";
 import logo from "../../assets/5_Blog_Layout_Best_Practices_From_2016-1.jpg";
 
 const Navbar = () => {
@@ -35,21 +35,30 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const { data: categories } = useQuery({
+  // Fetch categories
+  const { data: categoriesData } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const response = await axiosInstance.get("/categories");
-      return response.data.data;
+      return response.data;
     },
   });
 
-  // Group categories for better organization
-  const groupedCategories = (categories &&
-    categories?.reduce((acc, category, index) => {
-      const columnIndex = Math.floor(index / Math.ceil(categories.length / 2));
-      acc[columnIndex] = [...(acc[columnIndex] || []), category];
-      return acc;
-    }, [])) || [[], []];
+  // Safely access categories array and handle it properly
+  const categories = categoriesData?.data || [];
+
+  // Group categories for better organization - safely
+  const groupedCategories =
+    Array.isArray(categories) && categories.length > 0
+      ? categories.reduce((acc, category, index) => {
+          const columnIndex = Math.floor(
+            index / Math.ceil(categories.length / 2)
+          );
+          if (!acc[columnIndex]) acc[columnIndex] = [];
+          acc[columnIndex].push(category);
+          return acc;
+        }, [])
+      : [[], []];
 
   return (
     <nav
@@ -119,19 +128,21 @@ const Navbar = () => {
               >
                 <div className="bg-gray-900/90 backdrop-blur-md rounded-lg shadow-xl border border-gray-800/80 overflow-hidden p-4 w-[600px]">
                   <div className="grid grid-cols-2 gap-4">
-                    {groupedCategories.map((column, colIndex) => (
-                      <div key={`col-${colIndex}`} className="space-y-1">
-                        {column.map((category) => (
-                          <Link
-                            key={category._id}
-                            to={`/category/${category.name}`}
-                            className="block px-4 py-2 text-gray-200 hover:bg-gray-800/70 rounded-md capitalize transition-colors"
-                          >
-                            {category.name}
-                          </Link>
-                        ))}
-                      </div>
-                    ))}
+                    {Array.isArray(groupedCategories) &&
+                      groupedCategories.map((column, colIndex) => (
+                        <div key={`col-${colIndex}`} className="space-y-1">
+                          {Array.isArray(column) &&
+                            column.map((category) => (
+                              <Link
+                                key={category._id}
+                                to={`/category/${category.name}`}
+                                className="block px-4 py-2 text-gray-200 hover:bg-gray-800/70 rounded-md capitalize transition-colors"
+                              >
+                                {category.name}
+                              </Link>
+                            ))}
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -298,15 +309,16 @@ const Navbar = () => {
               Categories
             </div>
             <div className="pl-4 pr-2 py-2 grid grid-cols-2 gap-2">
-              {categories?.map((category) => (
-                <Link
-                  key={category._id}
-                  to={`/category/${category.name}`}
-                  className="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800/70 rounded capitalize"
-                >
-                  {category.name}
-                </Link>
-              ))}
+              {Array.isArray(categories) &&
+                categories.map((category) => (
+                  <Link
+                    key={category._id}
+                    to={`/category/${category.name}`}
+                    className="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800/70 rounded capitalize"
+                  >
+                    {category.name}
+                  </Link>
+                ))}
             </div>
 
             <NavLink
