@@ -16,7 +16,7 @@ const modules = {
     ],
     [{ align: [] }],
     ["blockquote", "code-block"],
-    ["link", "image", "video"],
+    ["link"],
     ["clean"],
   ],
   clipboard: {
@@ -40,8 +40,6 @@ const formats = [
   "blockquote",
   "code-block",
   "link",
-  "image",
-  "video",
 ];
 
 /**

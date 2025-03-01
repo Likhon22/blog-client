@@ -202,10 +202,22 @@ const SingleArticleCard = ({ blog }) => {
       {/* Article content with more spacious layout */}
       <div id="article-content" className="max-w-3xl mx-auto px-6 py-16">
         {/* Article Content with interspersed images */}
+        <style>{`
+    .prose .ql-align-center { text-align: center !important; }
+    .prose .ql-align-right { text-align: right !important; }
+    .prose .ql-align-justify { text-align: justify !important; }
+    .prose .ql-align-left { text-align: left !important; }
+    .prose .ql-indent-1 { padding-left: 3em; }
+    .prose .ql-indent-2 { padding-left: 6em; }
+    .prose .ql-indent-3 { padding-left: 9em; }
+    .prose img { margin: 1.5em auto; display: block; }
+  `}</style>
+
+        {/* Article Content with interspersed images */}
         <div
           className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 
-                    prose-p:text-gray-700 prose-img:rounded-xl prose-a:text-blue-600 prose-a:no-underline
-                    hover:prose-a:underline prose-a:font-medium"
+              prose-p:text-gray-700 prose-img:rounded-xl prose-a:text-blue-600 prose-a:no-underline
+              hover:prose-a:underline prose-a:font-medium"
         >
           {renderContent()}
         </div>

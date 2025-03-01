@@ -47,7 +47,9 @@ const Banner = () => {
   });
 
   const firstArticle = blogs?.data?.data?.[0];
-
+  if (firstArticle && !firstArticle?.bannerImg) {
+    return <Loader />;
+  }
   // Format date for featured article
   const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -70,7 +72,7 @@ const Banner = () => {
 
       {/* Search Box and Content Overlay */}
       <div className="container mx-auto px-4 h-full flex flex-col items-center justify-center relative z-10">
-        <div className="text-center mb-8">
+        <div className="text-center  mt-20 mb-8">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 max-w-4xl mx-auto">
             Explore the world of thoughts, ideas, and perspectives
           </h1>

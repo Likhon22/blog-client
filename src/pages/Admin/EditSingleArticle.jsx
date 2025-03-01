@@ -292,6 +292,17 @@ function EditSingleArticle() {
           <h3 className="text-sm font-medium text-gray-700">Preview</h3>
         </div>
         <div className="p-4">
+          {/* Add styles for alignment classes */}
+          <style>{`
+      .prose .ql-align-center { text-align: center !important; }
+      .prose .ql-align-right { text-align: right !important; }
+      .prose .ql-align-justify { text-align: justify !important; }
+      .prose .ql-align-left { text-align: left !important; }
+      .prose .ql-indent-1 { padding-left: 3em; }
+      .prose .ql-indent-2 { padding-left: 6em; }
+      .prose .ql-indent-3 { padding-left: 9em; }
+      .prose img { margin: 1.5em auto; display: block; max-width: 100%; height: auto; }
+    `}</style>
           <h2 className="text-xl font-bold mb-2">{data?.data?.title}</h2>
           <div
             className="prose prose-sm max-w-none"
