@@ -205,7 +205,7 @@ const Navbar = () => {
                         <FaUser className="text-white text-sm" />
                       </div>
                     )}
-                    <span className="font-medium hidden lg:block">
+                    <span className="font-medium hidden lg:block capitalize">
                       {user.displayName?.split(" ")[0] || "User"}
                     </span>
                   </button>

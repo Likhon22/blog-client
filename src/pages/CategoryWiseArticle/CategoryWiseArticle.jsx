@@ -27,6 +27,21 @@ const CategoryWiseArticle = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
+  // Get the latest article for the banner (always newest first)
+  const { data: latestArticle, isLoading: isLatestLoading } = useQuery({
+    queryKey: ["category", id, "latest"],
+    queryFn: async () => {
+      const res = await axiosInstance.get(
+        `/articles/all-articles?category=${encodeURIComponent(
+          id
+        )}&limit=1&page=1&sort=-createdAt`
+      );
+      return res.data?.data?.[0] || null;
+    },
+    enabled: !!id,
+  });
+
+  // Get articles with sorting for the list below
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["category", id, currentPage, sortOrder],
     queryFn: async () => {
@@ -69,14 +84,16 @@ const CategoryWiseArticle = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isLatestLoading) {
     return <Loader />;
   }
 
   const totalPages = blogs?.meta?.totalPages || 0;
-  const firstArticle = blogs?.data?.[0];
-  const remainingArticles = blogs?.data?.slice(1) || [];
-  const hasMultipleArticles = (blogs?.data?.length || 0) > 1;
+  // Filter out the latest article from the list to avoid duplication
+  const remainingArticles =
+    blogs?.data?.filter((article) => article._id !== latestArticle?._id) || [];
+
+  const hasMultipleArticles = (blogs?.meta?.totalDocuments || 0) > 1;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -93,8 +110,8 @@ const CategoryWiseArticle = () => {
         </div>
       </div>
 
-      {/* Featured Post Section */}
-      {firstArticle && (
+      {/* Featured Post Section - Always shows latest article */}
+      {latestArticle && (
         <div className="relative -mt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-xl overflow-hidden shadow-xl">
             <div className="md:flex">
@@ -106,10 +123,10 @@ const CategoryWiseArticle = () => {
                 )}
                 <img
                   src={
-                    firstArticle?.bannerImg ||
+                    latestArticle?.bannerImg ||
                     "https://placehold.co/1200x800/1a365d/FFFFFF?text=Featured+Article"
                   }
-                  alt={firstArticle?.title}
+                  alt={latestArticle?.title}
                   className="h-full w-full object-cover"
                   onLoad={() => setBannerLoaded(true)}
                   onError={(e) => {
@@ -123,37 +140,40 @@ const CategoryWiseArticle = () => {
               <div className="md:w-1/2 p-8 flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full uppercase tracking-wider">
-                    {formatCategoryName(firstArticle?.category)}
+                    {formatCategoryName(latestArticle?.category)}
+                  </span>
+                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full uppercase tracking-wider">
+                    Featured
                   </span>
                 </div>
 
-                <Link to={`/blog/${firstArticle?._id}`}>
+                <Link to={`/blog/${latestArticle?._id}`}>
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 hover:text-blue-700 transition-colors duration-200">
-                    {firstArticle?.title}
+                    {latestArticle?.title}
                   </h2>
                 </Link>
 
                 <div className="flex flex-wrap items-center text-gray-500 text-sm mb-4 gap-4">
-                  {firstArticle?.author && (
+                  {latestArticle?.author && (
                     <div className="flex items-center">
                       <FaUser className="mr-2 text-gray-400" />
-                      <span>{firstArticle.author.name}</span>
+                      <span>{latestArticle.author.name}</span>
                     </div>
                   )}
 
-                  {firstArticle?.createdAt && (
+                  {latestArticle?.createdAt && (
                     <div className="flex items-center">
                       <FaCalendarAlt className="mr-2 text-gray-400" />
                       <span>
-                        {new Date(firstArticle.createdAt).toLocaleDateString()}
+                        {new Date(latestArticle.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                   )}
                 </div>
 
-                {firstArticle?.post && (
+                {latestArticle?.post && (
                   <p className="text-gray-600 line-clamp-3 mb-5">
-                    {firstArticle.post
+                    {latestArticle.post
                       .replace(/<[^>]+>/g, "")
                       .substring(0, 150)}
                     ...
@@ -161,7 +181,7 @@ const CategoryWiseArticle = () => {
                 )}
 
                 <Link
-                  to={`/blog/${firstArticle?._id}`}
+                  to={`/blog/${latestArticle?._id}`}
                   className="inline-flex items-center px-5 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition-colors duration-200 self-start"
                 >
                   Read Article <FaLongArrowAltRight className="ml-2" />
