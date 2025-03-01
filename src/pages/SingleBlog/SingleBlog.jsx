@@ -99,7 +99,7 @@ const SingleBlog = () => {
       {isRelatedLoading ? (
         <Loader />
       ) : (
-        <div className="w-5/6 mx-auto mx-auto mt-12">
+        <div className="w-5/6 mx-auto  mt-12">
           <h2 className="text-3xl font-semibold text-gray-800 mb-8">
             Related Posts
           </h2>

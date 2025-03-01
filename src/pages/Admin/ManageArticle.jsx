@@ -166,10 +166,10 @@ const ManageArticle = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          {article.image ? (
+                          {article.bannerImg ? (
                             <img
                               className="h-10 w-10 rounded object-cover mr-3"
-                              src={article.image}
+                              src={article.bannerImg}
                               alt={article.title}
                             />
                           ) : (
@@ -193,13 +193,13 @@ const ManageArticle = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">
                           <Link to={`/dashboard/edit-article/${article._id}`}>
-                            <button className="bg-emerald-500 text-white px-3 py-1.5 rounded text-xs font-medium flex items-center transition-colors hover:bg-emerald-600">
+                            <button className="bg-emerald-500 cursor-pointer text-white px-3 py-1.5 rounded text-xs font-medium flex items-center transition-colors hover:bg-emerald-600">
                               <FaEdit className="mr-1" /> Edit
                             </button>
                           </Link>
                           <button
                             onClick={() => handleDeleteArticle(article._id)}
-                            className="bg-rose-500 text-white px-3 py-1.5 rounded text-xs font-medium flex items-center transition-colors hover:bg-rose-600"
+                            className="bg-rose-500 cursor-pointer text-white px-3 py-1.5 rounded text-xs font-medium flex items-center transition-colors hover:bg-rose-600"
                           >
                             <FaTrash className="mr-1" /> Delete
                           </button>

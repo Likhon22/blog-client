@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { FaEdit, FaNewspaper } from "react-icons/fa";
+import { FaEdit, FaNewspaper, FaStar } from "react-icons/fa";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Loader from "../../components/Loader/Loader";
 import { axiosInstance } from "../../utils";
 
@@ -12,6 +12,8 @@ function EditSingleArticle() {
   const { id } = useParams();
   const [value, setValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFeatured, setIsFeatured] = useState(false);
+  const queryClient = useQueryClient();
 
   // Fetch article data
   const { data, isLoading, isError } = useQuery({
@@ -24,16 +26,45 @@ function EditSingleArticle() {
     },
   });
 
-  // Set editor content when data is loaded
+  // Set editor content and featured state when data is loaded
   useEffect(() => {
-    if (data?.data?.post) {
-      setValue(data.data.post);
+    if (data?.data) {
+      setValue(data.data.post || "");
+      setIsFeatured(data.data.featured || false);
     }
   }, [data]);
 
   if (isLoading) return <Loader />;
   if (isError)
     return <p className="text-red-500 text-center">Failed to load article.</p>;
+
+  // Separate function to handle featured toggle
+  const handleFeaturedToggle = async () => {
+    try {
+      setIsSubmitting(true);
+      const newFeaturedState = !isFeatured;
+
+      const result = await axiosInstance.put(`/articles/update-article/${id}`, {
+        featured: newFeaturedState,
+      });
+
+      if (result.data.success) {
+        setIsFeatured(newFeaturedState);
+        toast.success(
+          newFeaturedState
+            ? "Article set as featured! This will replace any previously featured article."
+            : "Article removed from featured"
+        );
+        // Invalidate queries to refresh data
+        queryClient.invalidateQueries("blogs");
+      }
+    } catch (err) {
+      toast.error("Failed to update featured status");
+      console.log(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +91,12 @@ function EditSingleArticle() {
     const title = form.title.value;
     const category = form.category.value.toLowerCase();
 
-    const articleInfo = { title, category, post: value };
+    const articleInfo = {
+      title,
+      category,
+      post: value,
+      featured: isFeatured, // Include featured status in the update
+    };
 
     try {
       const result = await axiosInstance.put(
@@ -69,6 +105,8 @@ function EditSingleArticle() {
       );
       if (result.data.success) {
         toast.success("Article updated successfully");
+        // Invalidate queries to refresh data
+        queryClient.invalidateQueries("blogs");
       }
     } catch (err) {
       toast.error("Failed to update article");
@@ -89,6 +127,40 @@ function EditSingleArticle() {
             Update your article content and details
           </p>
         </div>
+
+        {/* Featured Toggle Button - DaisyUI Version */}
+        <div className="mt-4 md:mt-0">
+          <div className="card compact bg-base-100 shadow-sm border border-base-200">
+            <div className="card-body flex-row items-center gap-4">
+              <div className={`avatar ${isFeatured ? "online" : "offline"}`}>
+                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                  <FaStar
+                    className={`h-5 w-5 ${
+                      isFeatured ? "text-amber-500" : "text-gray-400"
+                    }`}
+                  />
+                </div>
+              </div>
+              <div>
+                <h3 className="font-medium">Featured Article</h3>
+                <p className="text-xs opacity-70">
+                  Show this on your homepage banner
+                </p>
+              </div>
+              <div className="ml-2">
+                <label className="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-primary"
+                    checked={isFeatured}
+                    onChange={handleFeaturedToggle}
+                    disabled={isSubmitting}
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -98,6 +170,11 @@ function EditSingleArticle() {
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               Article #{id.substring(0, 8)}
             </h3>
+            {isFeatured && (
+              <div className="badge badge-warning gap-1 ml-3">
+                <FaStar className="w-3 h-3" /> Featured
+              </div>
+            )}
           </div>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
             Last updated:{" "}
@@ -170,7 +247,7 @@ function EditSingleArticle() {
                   <span className="text-xs font-medium text-gray-500">
                     STATUS
                   </span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium  text-green-800">
+                  <span className="badge badge-success bg-green-100 text-green-800">
                     Published
                   </span>
                 </div>
@@ -192,7 +269,7 @@ function EditSingleArticle() {
           <div className="px-4 py-3 bg-gray-50 sm:px-6 flex justify-between items-center">
             <button
               type="button"
-              className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="btn btn-outline btn-sm"
               onClick={() => window.history.back()}
             >
               Cancel
@@ -201,8 +278,8 @@ function EditSingleArticle() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+              className={`btn btn-primary btn-sm ${
+                isSubmitting ? "loading" : ""
               }`}
             >
               {isSubmitting ? "Updating..." : "Update Article"}

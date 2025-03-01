@@ -75,7 +75,7 @@ const AdminHome = () => {
             Dashboard Overview
           </h1>
           <p className="mt-1 text-sm text-gray-600">
-            Monitor and manage your blog's key metrics
+            Monitor and manage your blogs key metrics
           </p>
         </div>
 

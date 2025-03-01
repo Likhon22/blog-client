@@ -3,7 +3,7 @@ import { FaTag, FaUser } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 const ArticleCard = ({ blog }) => {
-  const { title, category, image, _id, author } = blog;
+  const { title, category, bannerImg, _id, author } = blog;
 
   return (
     <Link to={`/blog/${_id}`} className="group">
@@ -11,10 +11,7 @@ const ArticleCard = ({ blog }) => {
         {/* Image Container with consistent aspect ratio */}
         <div className="relative pt-[56.25%] w-full overflow-hidden">
           <img
-            src={
-              image ||
-              "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            }
+            src={bannerImg}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             alt={title}
           />

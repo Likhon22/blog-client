@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
-import { FaPlus, FaImage, FaNewspaper } from "react-icons/fa";
+import { FaPlus, FaNewspaper } from "react-icons/fa";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { axiosInstance } from "../../utils";
+import uploadImage from "../../utils/uploadImage";
 
 function CreateArticle() {
   const [value, setValue] = useState("");
+  const [bottomImg, setBottomImg] = useState(0);
+  const [bannerPreview, setBannerPreview] = useState(null);
   const [categoryValue, setCategoryValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user } = useAuth();
+
+  const handleBannerChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setBannerPreview(URL.createObjectURL(file));
+    }
+  };
 
   const { data: categories, refetch } = useQuery({
     queryKey: ["categories"],
@@ -42,18 +52,63 @@ function CreateArticle() {
 
     setIsSubmitting(true);
 
-    const form = e.target;
-    const title = form.title.value;
-    const category = categoryValue;
-    const authorEmail = user.email;
-    const articleInfo = {
-      title,
-      category: category.toLowerCase().trim(),
-      post: value,
-      authorEmail,
-    };
-
     try {
+      const form = e.target;
+      const title = form.title.value;
+      const category = categoryValue;
+      const authorEmail = user.email;
+
+      // Upload banner image
+      const bannerImageData = form.bannerImg.files[0];
+      let bannerImage = null;
+
+      if (bannerImageData) {
+        bannerImage = await uploadImage(
+          `hero_image_${Date.now()}`,
+          bannerImageData
+        );
+      }
+
+      // Upload bottom images
+      const bottomImages = [];
+
+      // Process each bottom image one by one
+      if (bottomImg > 0) {
+        toast.loading("Uploading additional images...", {
+          id: "uploading-images",
+        });
+
+        for (let i = 0; i < bottomImg; i++) {
+          const imageField = `image${i + 1}`;
+          const imageFile = form[imageField]?.files[0];
+
+          if (imageFile) {
+            // Use a more descriptive name for each uploaded image
+            const imageName = `content_image_${i + 1}_${Date.now()}`;
+            const uploadedImage = await uploadImage(imageName, imageFile);
+
+            if (uploadedImage) {
+              bottomImages.push({
+                position: i + 1,
+                url: uploadedImage,
+                caption: `Image ${i + 1} for ${title}`,
+              });
+            }
+          }
+        }
+
+        toast.success("Additional images uploaded", { id: "uploading-images" });
+      }
+
+      const articleInfo = {
+        title,
+        category: category.toLowerCase().trim(),
+        post: value,
+        authorEmail,
+        bannerImg: bannerImage,
+        additionalImages: bottomImages,
+      };
+
       const result = await axiosInstance.post(
         "/articles/create-article",
         articleInfo
@@ -64,9 +119,12 @@ function CreateArticle() {
         form.reset();
         setValue("");
         setCategoryValue("");
+        setBannerPreview(null);
+        setBottomImg(0);
       }
     } catch (err) {
       toast.error(err.message || "Failed to create article");
+      console.error("Error creating article:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -114,7 +172,7 @@ function CreateArticle() {
         </div>
 
         <button
-          className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 cursor-pointer border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
           <FaPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
@@ -177,6 +235,32 @@ function CreateArticle() {
         <form onSubmit={handleSubmit} className="border-t border-gray-200">
           <div className="px-4 py-5 sm:p-6">
             <div className="grid grid-cols-1 gap-6 mb-6">
+              {/* Image Upload Button - Commented out but styled properly */}
+              <div>
+                <label
+                  htmlFor="bannerImg"
+                  className="w-48 h-48 border-2 cursor-pointer border-gray-300 border-dashed rounded-md flex justify-center items-center text-sm font-medium text-gray-700 mb-1 overflow-hidden"
+                  style={{
+                    backgroundImage: bannerPreview
+                      ? `url(${bannerPreview})`
+                      : "none",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  {!bannerPreview && "Banner Image"}
+                </label>
+
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  name="bannerImg"
+                  id="bannerImg"
+                  onChange={handleBannerChange}
+                  required
+                />
+              </div>
               {/* Title Input */}
               <div>
                 <label
@@ -224,20 +308,6 @@ function CreateArticle() {
                 </select>
               </div>
 
-              {/* Image Upload Button - Commented out but styled properly */}
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Featured Image
-                </label>
-                <button
-                  type="button"
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  <FaImage className="-ml-1 mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  Upload Image
-                </button>
-              </div> */}
-
               {/* Text Editor */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -247,6 +317,40 @@ function CreateArticle() {
                   <TextEditor value={value} setValue={setValue} />
                 </div>
               </div>
+
+              <div>
+                <label
+                  htmlFor="title"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Number of bottom images
+                </label>
+                <input
+                  onChange={(e) => setBottomImg(e.target.value)}
+                  value={bottomImg}
+                  max={8}
+                  min={0}
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
+                  type="number"
+                />
+                {bottomImg > 0 &&
+                  [...Array(parseInt(bottomImg))].map((_, index) => (
+                    <div key={index}>
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Image {index + 1}
+                      </label>
+                      <input
+                        type="file"
+                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3"
+                        accept="image/*"
+                        name={`image${index + 1}`}
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
 
@@ -255,7 +359,7 @@ function CreateArticle() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+              className={`inline-flex cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
                 isSubmitting ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
