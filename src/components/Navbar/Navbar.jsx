@@ -44,11 +44,12 @@ const Navbar = () => {
   });
 
   // Group categories for better organization
-  const groupedCategories = categories?.reduce((acc, category, index) => {
-    const columnIndex = Math.floor(index / Math.ceil(categories.length / 2));
-    acc[columnIndex] = [...(acc[columnIndex] || []), category];
-    return acc;
-  }, []) || [[], []];
+  const groupedCategories = (categories &&
+    categories?.reduce((acc, category, index) => {
+      const columnIndex = Math.floor(index / Math.ceil(categories.length / 2));
+      acc[columnIndex] = [...(acc[columnIndex] || []), category];
+      return acc;
+    }, [])) || [[], []];
 
   return (
     <nav

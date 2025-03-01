@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";

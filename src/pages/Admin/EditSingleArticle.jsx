@@ -143,9 +143,6 @@ function EditSingleArticle() {
               </div>
               <div>
                 <h3 className="font-medium">Featured Article</h3>
-                <p className="text-xs opacity-70">
-                  Show this on your homepage banner
-                </p>
               </div>
               <div className="ml-2">
                 <label className="label cursor-pointer">

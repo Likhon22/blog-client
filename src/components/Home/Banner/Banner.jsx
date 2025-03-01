@@ -142,9 +142,7 @@ const Banner = () => {
 
                 {search && results?.data?.length === 0 && (
                   <div className="bg-white/10 backdrop-blur-md text-white px-4 py-6 rounded-xl text-center">
-                    <p className="font-medium">
-                      No results found for "{search}"
-                    </p>
+                    <p className="font-medium">No results found for {search}</p>
                     <p className="text-gray-300 text-sm mt-1">
                       Try using different keywords
                     </p>
