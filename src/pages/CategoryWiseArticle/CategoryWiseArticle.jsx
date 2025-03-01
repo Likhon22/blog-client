@@ -17,7 +17,7 @@ import { axiosInstance } from "../../utils";
 const CategoryWiseArticle = () => {
   const { id } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState("newest");
+  const [sortOrder, setSortOrder] = useState("-createdAt");
   const [viewLayout, setViewLayout] = useState("grid"); // "grid", "list"
   const [bannerLoaded, setBannerLoaded] = useState(false);
   const limit = 9;
@@ -201,8 +201,8 @@ const CategoryWiseArticle = () => {
                     value={sortOrder}
                     onChange={(e) => handleSort(e.target.value)}
                   >
-                    <option value="newest">Newest First</option>
-                    <option value="oldest">Oldest First</option>
+                    <option value="-createdAt">Newest First</option>
+                    <option value="createdAt">Oldest First</option>
                   </select>
                 </div>
               </div>

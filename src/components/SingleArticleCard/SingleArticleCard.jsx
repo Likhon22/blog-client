@@ -119,12 +119,12 @@ const SingleArticleCard = ({ blog }) => {
   };
 
   return (
-    <article className="bg-white overflow-hidden">
+    <article className="bg-white overflow-hidden w-full">
       {/* Full-screen Hero Banner with fixed positioning */}
       <div className="relative h-screen w-full overflow-hidden">
         {/* Loading state */}
         {!bannerLoaded && (
-          <div className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10">
+          <div className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10 w-full">
             <div className="animate-pulse flex flex-col items-center">
               <div className="h-10 w-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
               <p className="text-gray-600">Loading article...</p>
@@ -133,27 +133,29 @@ const SingleArticleCard = ({ blog }) => {
         )}
 
         {/* Banner image */}
-        <img
-          src={
-            bannerImg ||
-            "https://placehold.co/1200x800/1a365d/FFFFFF?text=Zenfla+Article"
-          }
-          alt={title}
-          className="w-full h-full object-cover"
-          onLoad={() => setBannerLoaded(true)}
-          onError={(e) => {
-            console.error("Banner image failed to load:", bannerImg);
-            e.target.src =
-              "https://placehold.co/1200x800/1a365d/FFFFFF?text=Zenfla+Article";
-            setBannerLoaded(true);
-          }}
-        />
+        <div className="absolute inset-0 ">
+          <img
+            src={
+              bannerImg ||
+              "https://placehold.co/1200x800/1a365d/FFFFFF?text=Zenfla+Article"
+            }
+            alt={title}
+            className="w-full h-full object-cover object-center"
+            onLoad={() => setBannerLoaded(true)}
+            onError={(e) => {
+              console.error("Banner image failed to load:", bannerImg);
+              e.target.src =
+                "https://placehold.co/1200x800/1a365d/FFFFFF?text=Zenfla+Article";
+              setBannerLoaded(true);
+            }}
+          />
+        </div>
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
 
         {/* Article title and meta - centered for dramatic effect */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 w-full ">
           <div className="max-w-4xl">
             {category && (
               <span className="inline-block px-4 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium uppercase tracking-wider mb-6">

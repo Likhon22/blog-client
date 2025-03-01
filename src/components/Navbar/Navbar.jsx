@@ -7,7 +7,6 @@ import { axiosInstance } from "../../utils";
 import { FiMenu, FiX, FiChevronDown, FiLogOut, FiHome } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 
-
 const Navbar = () => {
   const { user, logout } = useAuth();
   const role = useRole();
@@ -62,7 +61,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-gray-900/90 backdrop-blur-md shadow-lg py-2"
           : "bg-gradient-to-b from-black/60 to-transparent py-4"

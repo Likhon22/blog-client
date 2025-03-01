@@ -27,7 +27,6 @@ const SingleBlog = () => {
     },
     enabled: !!blog,
   });
-  console.log(blogs?.data);
 
   if (isLoading) {
     return <Loader />;
@@ -57,18 +56,22 @@ const SingleBlog = () => {
   };
 
   return (
-    <div className="container   pb-24">
-      {/* Main Blog Post */}
-      <div className="bg-white shadow-sm rounded-lg mb-8">
-        <SingleArticleCard blog={blog.data} />
-        <div className="flex justify-between items-center gap-4 mt-4 px-6 py-4">
-          {/* Share Buttons */}
-          <div className="flex gap-4 w-5/6 mx-auto">
+    <div className="w-full mx-auto pb-24">
+      {/* Main Blog Post - Full width for banner */}
+      <div className="bg-white shadow-sm mb-8">
+        {/* Article Card Container - No width constraints to allow full-width hero */}
+        <div className="w-full">
+          <SingleArticleCard blog={blog.data} />
+        </div>
+
+        {/* Share buttons with container width */}
+        <div className="container mx-auto flex justify-between items-center gap-4 mt-4 px-6 py-4">
+          <div className="flex gap-4 w-full mx-auto justify-center">
             <a
               href={`https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-green-600 text-2xl"
+              className="text-green-600 hover:text-green-700 text-2xl transition-colors"
               aria-label="Share on WhatsApp"
             >
               <FaWhatsapp />
@@ -78,7 +81,7 @@ const SingleBlog = () => {
               href={`https://www.facebook.com/dialog/send?link=${shareUrl}&app_id=YOUR_FACEBOOK_APP_ID&redirect_uri=${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 text-2xl"
+              className="text-blue-600 hover:text-blue-700 text-2xl transition-colors"
               aria-label="Share on Facebook Messenger"
             >
               <FaFacebookMessenger />
@@ -86,7 +89,7 @@ const SingleBlog = () => {
 
             <button
               onClick={handleNativeShare}
-              className="text-gray-600 text-2xl"
+              className="text-gray-600 hover:text-gray-800 text-2xl transition-colors"
               aria-label="Share using native share"
             >
               <FaShareAlt />
@@ -95,25 +98,27 @@ const SingleBlog = () => {
         </div>
       </div>
 
-      {/* Related Blogs Section */}
-      {isRelatedLoading ? (
-        <Loader />
-      ) : (
-        <div className="w-5/6 mx-auto  mt-12">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-8">
-            Related Posts
-          </h2>
-          {filteredRelatedBlogs?.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredRelatedBlogs?.slice(0, 3).map((relatedBlog) => (
-                <ArticleCard key={relatedBlog._id} blog={relatedBlog} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500 text-lg">No related posts found.</p>
-          )}
-        </div>
-      )}
+      {/* Related Blogs Section - With container */}
+      <div className="container mx-auto">
+        {isRelatedLoading ? (
+          <Loader />
+        ) : (
+          <div className="mt-12 px-4">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-8">
+              Related Posts
+            </h2>
+            {filteredRelatedBlogs?.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredRelatedBlogs?.slice(0, 3).map((relatedBlog) => (
+                  <ArticleCard key={relatedBlog._id} blog={relatedBlog} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-lg">No related posts found.</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

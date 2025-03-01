@@ -100,7 +100,9 @@ const FeaturedArticle = () => {
             <div className="flex flex-wrap gap-y-3 items-center text-sm text-base-content/70 mb-6">
               <div className="flex items-center mr-6">
                 <FiUser className="mr-2" />
-                <span>{featuredArticle?.author?.name || "Unknown Author"}</span>
+                <span className="capitalize">
+                  {featuredArticle?.author?.name || "Unknown Author"}
+                </span>
               </div>
 
               <div className="flex items-center mr-6">
