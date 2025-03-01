@@ -23,7 +23,7 @@ const About = () => {
             to connect, inspire, and transform.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/blog" className="btn btn-primary">
+            <Link to="/blogs" className="btn btn-primary">
               Explore Our Blog
             </Link>
             <Link to="/login" className="btn btn-outline">

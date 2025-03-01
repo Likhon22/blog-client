@@ -172,7 +172,7 @@ const SingleArticleCard = ({ blog }) => {
               {author && (
                 <div className="flex items-center gap-2">
                   <FaUser />
-                  <span className="font-medium">{author.name}</span>
+                  <span className="font-medium capitalize">{author.name}</span>
                 </div>
               )}
 
@@ -241,10 +241,13 @@ const SingleArticleCard = ({ blog }) => {
               )}
               <div>
                 <h3 className="font-bold text-gray-900">
-                  Written by {author.name}
+                  Written by <span className="capitalize">{author.name}</span>
                 </h3>
                 <p className="text-gray-600 text-sm mt-1">
-                  {author.bio || `${author.name} is a contributor at Zenfla.`}
+                  {author.bio ||
+                    (
+                      <span className="capitalize">${author.name}</span>
+                    )` is a contributor at Zenfla.`}
                 </p>
               </div>
             </div>
