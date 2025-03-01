@@ -203,15 +203,42 @@ const SingleArticleCard = ({ blog }) => {
       <div id="article-content" className="max-w-3xl mx-auto px-6 py-16">
         {/* Article Content with interspersed images */}
         <style>{`
-    .prose .ql-align-center { text-align: center !important; }
-    .prose .ql-align-right { text-align: right !important; }
-    .prose .ql-align-justify { text-align: justify !important; }
-    .prose .ql-align-left { text-align: left !important; }
-    .prose .ql-indent-1 { padding-left: 3em; }
-    .prose .ql-indent-2 { padding-left: 6em; }
-    .prose .ql-indent-3 { padding-left: 9em; }
-    .prose img { margin: 1.5em auto; display: block; }
-  `}</style>
+  /* Text alignment styles */
+  .prose .ql-align-center { text-align: center !important; }
+  .prose .ql-align-right { text-align: right !important; }
+  .prose .ql-align-justify { text-align: justify !important; }
+  .prose .ql-align-left { text-align: left !important; }
+  
+  /* Indentation styles */
+  .prose .ql-indent-1 { padding-left: 3em; }
+  .prose .ql-indent-2 { padding-left: 6em; }
+  .prose .ql-indent-3 { padding-left: 9em; }
+  
+  /* Image styles */
+  .prose img { margin: 1.5em auto; display: block; max-width: 100%; height: auto; }
+  
+  /* Heading styles */
+  .prose h1 { font-size: 2em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  .prose h2 { font-size: 1.5em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  .prose h3 { font-size: 1.17em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  .prose h4 { font-size: 1em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  .prose h5 { font-size: 0.83em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  .prose h6 { font-size: 0.67em; margin-top: 1em; margin-bottom: 0.5em; font-weight: bold; }
+  
+  /* List styles */
+  .prose ul, .prose ol { margin-left: 2em; margin-bottom: 1em; }
+  .prose ul { list-style-type: disc; }
+  .prose ol { list-style-type: decimal; }
+  
+  /* Blockquote styles */
+  .prose blockquote { 
+    border-left: 4px solid #e5e7eb; 
+    padding-left: 1em; 
+    margin-left: 0;
+    margin-right: 0;
+    color: #6b7280; 
+  }
+`}</style>
 
         {/* Article Content with interspersed images */}
         <div
