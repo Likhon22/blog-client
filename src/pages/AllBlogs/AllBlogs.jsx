@@ -115,11 +115,6 @@ const AllBlogs = () => {
                   <FiCalendar className="mr-2" />
                   {formatDate(firstArticle.createdAt)}
                 </span>
-                <span className="mx-3">•</span>
-                <span className="flex items-center">
-                  <FiClock className="mr-2" />
-                  {firstArticle.readTime || "5 min read"}
-                </span>
               </div>
 
               <p className="mt-4 text-gray-200 text-lg max-w-3xl line-clamp-2 md:line-clamp-3">

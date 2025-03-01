@@ -34,7 +34,7 @@ const NewsletterSignup = () => {
   };
 
   return (
-    <section className="py-16 my-8 bg-base-100 -mx-4 px-4 rounded-lg">
+    <section className="py-16 my-8 bg-base-100 mx-4 px-4 rounded-lg">
       <div className="max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4">
           <FiMail className="w-6 h-6" />
@@ -58,7 +58,7 @@ const NewsletterSignup = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="input input-bordered flex-1"
+              className="input input-bordered flex-1 p-2 rounded-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

@@ -1,12 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  FiCalendar,
-  FiClock,
-  FiUser,
-  FiStar,
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiCalendar, FiClock, FiUser, FiArrowRight } from "react-icons/fi";
 import { axiosInstance } from "../../utils";
 import Loader from "../Loader/Loader";
 
@@ -56,13 +50,14 @@ const FeaturedArticle = () => {
     <section className="py-16 container mx-auto px-4">
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 mb-2">
-          <FiStar className="text-amber-500" />
-          <h2 className="text-xl uppercase font-semibold tracking-wider text-primary">
+          <h2 className="text-2xl capitalize font-semibold tracking-wider text-primary">
             Featured Article
           </h2>
-          <FiStar className="text-amber-500" />
         </div>
         <div className="w-24 h-1 bg-primary mx-auto my-2 rounded-full"></div>
+        <p className="mt-4 text-gray-600 text-lg pb-8">
+          Check out the featured from our community.
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row bg-base-100 rounded-xl shadow-xl overflow-hidden max-w-6xl mx-auto">
@@ -105,7 +100,7 @@ const FeaturedArticle = () => {
             <div className="flex flex-wrap gap-y-3 items-center text-sm text-base-content/70 mb-6">
               <div className="flex items-center mr-6">
                 <FiUser className="mr-2" />
-                <span>{featuredArticle.author?.name || "Unknown Author"}</span>
+                <span>{featuredArticle?.author?.name || "Unknown Author"}</span>
               </div>
 
               <div className="flex items-center mr-6">

@@ -161,11 +161,6 @@ const Banner = () => {
                 <FiCalendar className="mr-1" />
                 {formatDate(firstArticle.createdAt)}
               </span>
-              <span className="mx-3">•</span>
-              <span className="flex items-center">
-                <FiClock className="mr-1" />
-                {firstArticle.readTime || "5 min read"}
-              </span>
             </div>
             <Link to={`/blog/${firstArticle._id}`} className="group">
               <p className="text-lg md:text-xl text-white font-medium hover:text-primary-content/90 transition-colors">

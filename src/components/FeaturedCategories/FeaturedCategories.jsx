@@ -11,6 +11,7 @@ const FeaturedCategories = () => {
       return response.data;
     },
   });
+  console.log(categories);
 
   // Generate a dynamic background style for each category
   const getCategoryStyle = (index) => {
@@ -25,7 +26,7 @@ const FeaturedCategories = () => {
 
   return (
     <div>
-      {categories?.length > 0 && (
+      {categories?.data?.length > 0 && (
         <section className="py-10 md:py-16 container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-base-content">
@@ -44,7 +45,7 @@ const FeaturedCategories = () => {
             </div>
           ) : (
             <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              {categories?.map((category, index) => (
+              {categories?.data?.map((category, index) => (
                 <Link
                   key={category._id}
                   to={`/category/${category.name}`}

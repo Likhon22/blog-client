@@ -21,7 +21,8 @@ const LatestArticleCards = () => {
   return (
     <div className="w-4/5 mx-auto py-12">
       <div className="text-center">
-        <h2 className="text-2xl font-medium text-black">Latest Articles</h2>
+        <h2 className="text-2xl font-semibold text-primary">Latest Articles</h2>
+        <div className="w-24 h-1 bg-primary mx-auto my-2 rounded-full"></div>
         <p className="mt-4 text-gray-600 text-lg pb-8">
           Check out the latest blog posts from our community.
         </p>

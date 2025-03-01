@@ -6,7 +6,7 @@ import useRole from "../../hooks/useRole";
 import { axiosInstance } from "../../utils";
 import { FiMenu, FiX, FiChevronDown, FiLogOut, FiHome } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
-import logo from "../../assets/5_Blog_Layout_Best_Practices_From_2016-1.jpg";
+
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -73,13 +73,9 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center">
-              {logo ? (
-                <img src={logo} alt="Zenfla" className="h-9 w-auto" />
-              ) : (
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 text-transparent bg-clip-text">
-                  Zenfla
-                </span>
-              )}
+              <span className="text-2xl font-bold bg-gradient-to-r uppercase  from-blue-400 to-indigo-500 text-transparent bg-clip-text">
+                Zenfla
+              </span>
             </Link>
           </div>
 
@@ -126,7 +122,7 @@ const Navbar = () => {
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
-                <div className="bg-gray-900/90 backdrop-blur-md rounded-lg shadow-xl border border-gray-800/80 overflow-hidden p-4 w-[600px]">
+                <div className="bg-gray-900/80 backdrop-blur-md rounded-lg shadow-xl border border-gray-800/80 overflow-hidden p-4 w-[600px]">
                   <div className="grid grid-cols-2 gap-4">
                     {Array.isArray(groupedCategories) &&
                       groupedCategories.map((column, colIndex) => (

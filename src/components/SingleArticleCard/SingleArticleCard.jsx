@@ -4,8 +4,6 @@ import {
   FaCalendarAlt,
   FaUser,
   FaTag,
-  FaShareAlt,
-  FaBookmark,
   FaAngleLeft,
   FaAngleRight,
   FaChevronDown,
@@ -182,22 +180,6 @@ const SingleArticleCard = ({ blog }) => {
                   <span>{formattedDate}</span>
                 </div>
               )}
-
-              <div className="flex items-center gap-2">
-                <span className="text-sm">
-                  ~{Math.max(1, Math.ceil(post.length / 1000))} min read
-                </span>
-              </div>
-            </div>
-
-            {/* Social share buttons */}
-            <div className="flex justify-center gap-4 mb-12">
-              <button className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
-                <FaShareAlt className="text-white" />
-              </button>
-              <button className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
-                <FaBookmark className="text-white" />
-              </button>
             </div>
           </div>
         </div>
@@ -217,19 +199,6 @@ const SingleArticleCard = ({ blog }) => {
 
       {/* Article content with more spacious layout */}
       <div id="article-content" className="max-w-3xl mx-auto px-6 py-16">
-        {/* Reading time and estimated length */}
-        <div className="bg-gray-50 p-4 rounded-md mb-12 flex justify-between items-center">
-          <div>
-            <span className="font-medium text-gray-700">Reading time: </span>
-            <span className="text-gray-600">
-              ~{Math.max(1, Math.ceil(post.length / 1000))} min read
-            </span>
-          </div>
-          <div className="text-sm text-gray-500">
-            {post.length > 0 ? `${Math.ceil(post.length / 6)} words` : ""}
-          </div>
-        </div>
-
         {/* Article Content with interspersed images */}
         <div
           className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-gray-900 

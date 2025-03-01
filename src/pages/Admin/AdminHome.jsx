@@ -190,36 +190,37 @@ const AdminHome = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {categories?.map((category) => (
-                  <tr key={category._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 capitalize">
-                        {category.name}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
-                        {blogs?.data?.data
-                          ? blogs.data.data.filter(
-                              (blog) => blog?.category === category?.name
-                            ).length
-                          : blogs?.data
-                          ? blogs.data.filter(
-                              (blog) => blog?.category === category?.name
-                            ).length
-                          : 0}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        onClick={() => handleDelete(category._id)}
-                        className="text-red-600 hover:text-red-900 focus:outline-none"
-                      >
-                        <FaTrash className="inline" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {categories?.length > 0 &&
+                  categories?.map((category) => (
+                    <tr key={category._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900 capitalize">
+                          {category.name}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500">
+                          {blogs?.data?.data
+                            ? blogs.data.data.filter(
+                                (blog) => blog?.category === category?.name
+                              ).length
+                            : blogs?.data
+                            ? blogs.data.filter(
+                                (blog) => blog?.category === category?.name
+                              ).length
+                            : 0}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          onClick={() => handleDelete(category._id)}
+                          className="text-red-600 hover:text-red-900 focus:outline-none"
+                        >
+                          <FaTrash className="inline" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
