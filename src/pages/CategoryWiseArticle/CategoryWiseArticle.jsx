@@ -157,7 +157,9 @@ const CategoryWiseArticle = () => {
                   {latestArticle?.author && (
                     <div className="flex items-center">
                       <FaUser className="mr-2 text-gray-400" />
-                      <span>{latestArticle.author.name}</span>
+                      <span className="capitalize">
+                        {latestArticle.author.name}
+                      </span>
                     </div>
                   )}
 
@@ -339,7 +341,9 @@ const CategoryWiseArticle = () => {
                             {blog?.author && (
                               <div className="flex items-center">
                                 <FaUser className="mr-1 text-gray-400" />
-                                <span>{blog.author.name}</span>
+                                <span className="capitalize">
+                                  {blog.author.name}
+                                </span>
                               </div>
                             )}
                             {blog?.createdAt && (

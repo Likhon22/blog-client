@@ -46,7 +46,7 @@ const ArticleCard = ({ blog }) => {
                     <FaUser className="text-gray-500 text-xs" />
                   </div>
                 )}
-                <span className="font-medium">{author.name}</span>
+                <span className="font-medium capitalize">{author.name}</span>
               </div>
             )}
 
