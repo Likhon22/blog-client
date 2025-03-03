@@ -12,25 +12,6 @@ const NewsletterSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Simulate API call - replace with your actual API endpoint when ready
-      setTimeout(() => {
-        setIsSubscribed(true);
-        toast.success("Thank you for subscribing!");
-        setEmail("");
-        setIsSubmitting(false);
-      }, 1500);
-    } catch (error) {
-      toast.error("Failed to subscribe. Please try again.");
-      setIsSubmitting(false);
-    }
   };
 
   return (
