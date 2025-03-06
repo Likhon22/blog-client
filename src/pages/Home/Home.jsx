@@ -46,22 +46,6 @@ const Home = () => {
 
         {/* Additional SEO */}
         <meta name="robots" content="index, follow" />
-        {/* Structured Data for Logo */}
-        <script type="application/ld+json">
-          {`
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Zenfla",
-        "url": "https://www.zenfla.com",
-        "logo": "https://www.zenfla.com/logo.png",
-        "sameAs": [
-          "https://facebook.com/zenfla",
-          "https://twitter.com/zenfla"
-        ]
-      }
-    `}
-        </script>
       </Helmet>
       <Banner />
 
