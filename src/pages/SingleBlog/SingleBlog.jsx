@@ -69,7 +69,7 @@ const SingleBlog = () => {
             name="keywords"
             content={`${blog.data.category}, blog article, zenfla`}
           />
-          <link rel="canonical" href={`https://zenfla.vercel.app/blog/${id}`} />
+          <link rel="canonical" href={`https://www.zenfla.com/blog/${id}`} />
 
           {/* Open Graph tags */}
           <meta property="og:title" content={`${blog.data.title} - Zenfla`} />
@@ -80,7 +80,7 @@ const SingleBlog = () => {
           <meta property="og:type" content="article" />
           <meta
             property="og:url"
-            content={`https://zenfla.vercel.app/blog/${id}`}
+            content={`https://www.zenfla.com/blog/${id}`}
           />
           <meta property="og:image" content={blog.data.coverImage} />
           <meta property="og:site_name" content="Zenfla" />

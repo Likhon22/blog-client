@@ -88,14 +88,14 @@ const AllBlogs = () => {
           name="keywords"
           content="blog articles, zenfla blog, featured articles, latest posts"
         />
-        <link rel="canonical" href="https://zenfla.vercel.app/blogs" />
+        <link rel="canonical" href="https://www.zenfla.com/blogs" />
         <meta property="og:title" content="All Articles - Zenfla" />
         <meta
           property="og:description"
           content="Discover our collection of insightful articles, trends, and fresh perspectives from our community of writers."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zenfla.vercel.app/blogs" />
+        <meta property="og:url" content="https://www.zenfla.com/blogs" />
         <meta property="og:site_name" content="Zenfla" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="All Articles - Zenfla" />

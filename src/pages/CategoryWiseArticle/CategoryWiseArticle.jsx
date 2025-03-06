@@ -112,10 +112,7 @@ const CategoryWiseArticle = () => {
             id
           )}, articles, blog, category, zenfla`}
         />
-        <link
-          rel="canonical"
-          href={`https://zenfla.vercel.app/category/${id}`}
-        />
+        <link rel="canonical" href={`https://www.zenfla.com/category/${id}`} />
         <meta
           property="og:title"
           content={`${formatCategoryName(id)} Articles - Zenfla`}
@@ -129,7 +126,7 @@ const CategoryWiseArticle = () => {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`https://zenfla.vercel.app/category/${id}`}
+          content={`https://www.zenfla.com/category/${id}`}
         />
         <meta property="og:site_name" content="Zenfla" />
         <meta name="twitter:card" content="summary_large_image" />
