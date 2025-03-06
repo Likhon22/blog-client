@@ -264,7 +264,7 @@ const AdminHome = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {users?.data?.slice(0, 5).map((user) => (
+                {users?.data?.map((user) => (
                   <tr key={user._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
@@ -300,13 +300,6 @@ const AdminHome = () => {
               </tbody>
             </table>
           </div>
-          {users?.data?.length > 5 && (
-            <div className="px-6 py-3 border-t border-gray-200">
-              <button className="text-sm text-primary-600 hover:text-primary-800">
-                View all users
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
