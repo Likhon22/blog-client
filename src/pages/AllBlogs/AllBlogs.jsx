@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../../utils";
-import { FiCalendar, FiClock, FiArrowRight } from "react-icons/fi"; // We'll keep React Icons
+import { FiCalendar, FiArrowRight } from "react-icons/fi"; // We'll keep React Icons
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import Loader from "../../components/Loader/Loader";
+import { Helmet } from "react-helmet-async";
 
 const AllBlogs = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,6 +78,32 @@ const AllBlogs = () => {
 
   return (
     <div className="min-h-screen bg-base-100">
+      <Helmet>
+        <title>All Articles - Zenfla</title>
+        <meta
+          name="description"
+          content="Discover our collection of insightful articles, trends, and fresh perspectives from our community of writers."
+        />
+        <meta
+          name="keywords"
+          content="blog articles, zenfla blog, featured articles, latest posts"
+        />
+        <link rel="canonical" href="https://zenfla.vercel.app/blogs" />
+        <meta property="og:title" content="All Articles - Zenfla" />
+        <meta
+          property="og:description"
+          content="Discover our collection of insightful articles, trends, and fresh perspectives from our community of writers."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zenfla.vercel.app/blogs" />
+        <meta property="og:site_name" content="Zenfla" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="All Articles - Zenfla" />
+        <meta
+          name="twitter:description"
+          content="Discover our collection of insightful articles, trends, and fresh perspectives from our community of writers."
+        />
+      </Helmet>
       {/* Hero section with featured article */}
       {firstArticle && (
         <div className="relative h-[80vh] md:h-screen overflow-hidden">

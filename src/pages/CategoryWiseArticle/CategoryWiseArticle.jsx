@@ -13,6 +13,7 @@ import {
 import Loader from "../../components/Loader/Loader";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { axiosInstance } from "../../utils";
+import { Helmet } from "react-helmet-async";
 
 const CategoryWiseArticle = () => {
   const { id } = useParams();
@@ -97,6 +98,52 @@ const CategoryWiseArticle = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>{formatCategoryName(id)} Articles - Zenfla</title>
+        <meta
+          name="description"
+          content={`Explore our collection of insightful ${formatCategoryName(
+            id
+          )} articles, designed to inform and inspire you.`}
+        />
+        <meta
+          name="keywords"
+          content={`${formatCategoryName(
+            id
+          )}, articles, blog, category, zenfla`}
+        />
+        <link
+          rel="canonical"
+          href={`https://zenfla.vercel.app/category/${id}`}
+        />
+        <meta
+          property="og:title"
+          content={`${formatCategoryName(id)} Articles - Zenfla`}
+        />
+        <meta
+          property="og:description"
+          content={`Explore our collection of insightful ${formatCategoryName(
+            id
+          )} articles, designed to inform and inspire you.`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://zenfla.vercel.app/category/${id}`}
+        />
+        <meta property="og:site_name" content="Zenfla" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={`${formatCategoryName(id)} Articles - Zenfla`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Explore our collection of insightful ${formatCategoryName(
+            id
+          )} articles, designed to inform and inspire you.`}
+        />
+      </Helmet>
       {/* Category Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-900 to-indigo-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">

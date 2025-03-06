@@ -5,6 +5,7 @@ import SingleArticleCard from "../../components/SingleArticleCard/SingleArticleC
 import Loader from "../../components/Loader/Loader";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import { axiosInstance } from "../../utils";
+import { Helmet } from "react-helmet-async";
 
 const SingleBlog = () => {
   const { id } = useParams();
@@ -57,6 +58,56 @@ const SingleBlog = () => {
 
   return (
     <div className="w-full mx-auto pb-24">
+      {blog && (
+        <Helmet>
+          <title>{blog.data.title} - Zenfla</title>
+          <meta
+            name="description"
+            content={blog.data.excerpt || blog.data.title}
+          />
+          <meta
+            name="keywords"
+            content={`${blog.data.category}, blog article, zenfla`}
+          />
+          <link rel="canonical" href={`https://zenfla.vercel.app/blog/${id}`} />
+
+          {/* Open Graph tags */}
+          <meta property="og:title" content={`${blog.data.title} - Zenfla`} />
+          <meta
+            property="og:description"
+            content={blog.data.excerpt || blog.data.title}
+          />
+          <meta property="og:type" content="article" />
+          <meta
+            property="og:url"
+            content={`https://zenfla.vercel.app/blog/${id}`}
+          />
+          <meta property="og:image" content={blog.data.coverImage} />
+          <meta property="og:site_name" content="Zenfla" />
+
+          {/* Article specific tags */}
+          <meta
+            property="article:published_time"
+            content={blog.data.createdAt}
+          />
+          {blog.data.updatedAt && (
+            <meta
+              property="article:modified_time"
+              content={blog.data.updatedAt}
+            />
+          )}
+          <meta property="article:section" content={blog.data.category} />
+
+          {/* Twitter Card tags */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${blog.data.title} - Zenfla`} />
+          <meta
+            name="twitter:description"
+            content={blog.data.excerpt || blog.data.title}
+          />
+          <meta name="twitter:image" content={blog.data.coverImage} />
+        </Helmet>
+      )}
       {/* Main Blog Post - Full width for banner */}
       <div className="bg-white shadow-sm mb-8">
         {/* Article Card Container - No width constraints to allow full-width hero */}
