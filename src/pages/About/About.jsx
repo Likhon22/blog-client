@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { FiFeather, FiBookOpen, FiUsers, FiGlobe } from "react-icons/fi";
-
+import author1 from "../../assets/author1.jpeg";
+import author2 from "../../assets/author2.jpg";
+import banner from "../../assets/5_Blog_Layout_Best_Practices_From_2016-1.jpg";
 const About = () => {
   return (
     <div className="bg-base-100 min-h-screen">
@@ -39,7 +41,7 @@ const About = () => {
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
               <img
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643"
+                src={banner}
                 alt="Person writing in a journal"
                 className="rounded-lg shadow-lg w-full h-[500px] object-cover"
               />
@@ -61,29 +63,6 @@ const About = () => {
                 the world of blogging, Zenfla provides the tools, audience, and
                 support needed to make your voice heard.
               </p>
-              <div className="flex items-center gap-3">
-                <div className="avatar-group -space-x-3">
-                  <div className="avatar border-2 border-base-100">
-                    <div className="w-10">
-                      <img src="https://i.pravatar.cc/150?img=32" />
-                    </div>
-                  </div>
-                  <div className="avatar border-2 border-base-100">
-                    <div className="w-10">
-                      <img src="https://i.pravatar.cc/150?img=44" />
-                    </div>
-                  </div>
-                  <div className="avatar border-2 border-base-100">
-                    <div className="w-10">
-                      <img src="https://i.pravatar.cc/150?img=68" />
-                    </div>
-                  </div>
-                </div>
-                <span className="text-sm text-base-content/70">
-                  Founded by a team of writers, designers & technology
-                  enthusiasts
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -151,19 +130,19 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="p-6">
-              <h3 className="text-4xl font-bold text-primary mb-2">10K+</h3>
+              <h3 className="text-4xl font-bold text-primary mb-2">1K+</h3>
               <p className="text-base-content/70">Active Readers</p>
             </div>
             <div className="p-6">
-              <h3 className="text-4xl font-bold text-primary mb-2">500+</h3>
+              <h3 className="text-4xl font-bold text-primary mb-2">100+</h3>
               <p className="text-base-content/70">Published Articles</p>
             </div>
             <div className="p-6">
-              <h3 className="text-4xl font-bold text-primary mb-2">50+</h3>
+              <h3 className="text-4xl font-bold text-primary mb-2">5+</h3>
               <p className="text-base-content/70">Contributing Writers</p>
             </div>
             <div className="p-6">
-              <h3 className="text-4xl font-bold text-primary mb-2">12+</h3>
+              <h3 className="text-4xl font-bold text-primary mb-2">10+</h3>
               <p className="text-base-content/70">Content Categories</p>
             </div>
           </div>
@@ -185,14 +164,14 @@ const About = () => {
             <div className="card bg-base-100 shadow-md text-center">
               <figure className="px-10 pt-10">
                 <img
-                  src="https://i.pravatar.cc/300?img=32"
+                  src={author1}
                   alt="Team Member"
                   className="rounded-full w-32 h-32 object-cover"
                 />
               </figure>
               <div className="card-body">
-                <h3 className="card-title justify-center">Sarah Johnson</h3>
-                <p className="text-primary">Founder & Editor-in-Chief</p>
+                <h3 className="card-title justify-center">Mack</h3>
+                <p className="text-primary">Co-Founder & Editor-in-Chief</p>
                 <p className="text-base-content/70 text-sm">
                   Former journalist with a passion for storytelling and
                   community building.
@@ -203,14 +182,14 @@ const About = () => {
             <div className="card bg-base-100 shadow-md text-center">
               <figure className="px-10 pt-10">
                 <img
-                  src="https://i.pravatar.cc/300?img=68"
+                  src={author2}
                   alt="Team Member"
                   className="rounded-full w-32 h-32 object-cover"
                 />
               </figure>
               <div className="card-body">
                 <h3 className="card-title justify-center">Mark Shawon</h3>
-                <p className="text-primary">Technical Lead</p>
+                <p className="text-primary">Co-Founder & Technical Lead</p>
                 <p className="text-base-content/70 text-sm">
                   Software engineer dedicated to creating intuitive, powerful
                   publishing tools.

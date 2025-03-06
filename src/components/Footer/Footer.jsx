@@ -131,6 +131,9 @@ const Footer = () => {
             Copyright © {new Date().getFullYear()} - All rights reserved by
             Zenfla
           </p>
+          <p className="text-white/70 text-sm mt-2">
+            Developed by presync.tech
+          </p>
         </div>
       </div>
     </footer>
