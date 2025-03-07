@@ -58,7 +58,7 @@ const Footer = () => {
             <h3 className="font-bold mb-4 text-primary">Connect</h3>
             <div className="flex gap-4">
               <a
-                href="https://twitter.com"
+                href="https://x.com/zenfla_official?s=11"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Twitter"
@@ -90,7 +90,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61573807596451&mibextid=wwXIfr&rdid=rBe1tWSvGkUkDGFa&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F14JY9smmRz%2F%3Fmibextid%3DwwXIfr#"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
@@ -106,7 +106,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/zenfla_official/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"

@@ -6,6 +6,8 @@ import LatestArticleCards from "../../components/Home/LatestArticleCards/LatestA
 import NewsletterSignup from "../../components/NewsletterSignup/NewsletterSignup";
 
 const Home = () => {
+  console.log(import.meta.env.VITE_CLOUD_NAME);
+
   return (
     <div>
       <Helmet>
