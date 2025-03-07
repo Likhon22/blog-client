@@ -169,10 +169,10 @@ const Banner = () => {
                 {firstArticle.title}
               </p>
               <div className="flex items-center justify-center mt-3">
-                <span className="text-sm text-primary group-hover:underline">
+                <span className="text-sm text-blue-400/90  group-hover:underline">
                   Read Article
                 </span>
-                <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform text-primary" />
+                <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform text-blue-400/90" />
               </div>
             </Link>
           </div>

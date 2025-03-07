@@ -14,6 +14,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  // Add new states for mobile categories
+  const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   // Handle scrolling effect for navbar
   useEffect(() => {
@@ -58,6 +61,15 @@ const Navbar = () => {
           return acc;
         }, [])
       : [[], []];
+
+  // Handle category expansion on mobile
+  const toggleMobileCategory = (categoryId) => {
+    if (expandedCategory === categoryId) {
+      setExpandedCategory(null);
+    } else {
+      setExpandedCategory(categoryId);
+    }
+  };
 
   return (
     <nav
@@ -299,21 +311,71 @@ const Navbar = () => {
               All Blogs
             </NavLink>
 
-            {/* Mobile categories */}
-            <div className="px-4 py-3 text-white font-medium border-b border-gray-800/80">
-              Categories
-            </div>
-            <div className="pl-4 pr-2 py-2 grid grid-cols-2 gap-2">
-              {Array.isArray(categories) &&
-                categories.map((category) => (
-                  <Link
-                    key={category._id}
-                    to={`/category/${category.name}`}
-                    className="px-3 py-2 text-sm text-gray-300 hover:bg-gray-800/70 rounded capitalize"
-                  >
-                    {category.name}
-                  </Link>
-                ))}
+            {/* Mobile categories - UPDATED */}
+            <button
+              onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
+              className="px-4 py-3 text-white font-medium text-left flex justify-between items-center w-full hover:bg-gray-800/70 rounded-md"
+            >
+              <span>Categories</span>
+              <FiChevronDown
+                className={`transition-transform ${
+                  mobileCategoriesOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <div
+              className={`transition-all duration-300 overflow-hidden ${
+                mobileCategoriesOpen
+                  ? "max-h-[500px] opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="pl-2 pr-2 space-y-1">
+                {Array.isArray(categories) &&
+                  categories.map((category) => (
+                    <div key={category._id} className="rounded overflow-hidden">
+                      <button
+                        onClick={() => toggleMobileCategory(category._id)}
+                        className="px-4 py-2 text-gray-300 hover:bg-gray-800/70 rounded-md flex justify-between items-center w-full capitalize"
+                      >
+                        <span>{category.name}</span>
+                        <FiChevronDown
+                          className={`transition-transform ${
+                            expandedCategory === category._id
+                              ? "rotate-180"
+                              : ""
+                          }`}
+                        />
+                      </button>
+
+                      <div
+                        className={`transition-all duration-300 overflow-hidden ${
+                          expandedCategory === category._id
+                            ? "max-h-[200px] opacity-100"
+                            : "max-h-0 opacity-0"
+                        }`}
+                      >
+                        <Link
+                          to={`/category/${category.name}`}
+                          className="block px-6 py-2 text-sm text-gray-300 hover:bg-gray-800/70 bg-gray-800/30"
+                        >
+                          View all in {category.name}
+                        </Link>
+                        {/* If you have subcategories, map them here */}
+                        {category.subcategories?.map((subcategory) => (
+                          <Link
+                            key={subcategory._id}
+                            to={`/category/${category.name}/${subcategory.name}`}
+                            className="block px-6 py-2 text-sm text-gray-300 hover:bg-gray-800/70 bg-gray-800/30"
+                          >
+                            {subcategory.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
 
             <NavLink
