@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiSearch, FiArrowRight, FiCalendar, FiClock } from "react-icons/fi";
+import { FiSearch, FiArrowRight, FiCalendar } from "react-icons/fi";
 import Loader from "../../Loader/Loader";
 import { axiosInstance } from "../../../utils";
 
